@@ -1,0 +1,38 @@
+version: "3"
+services:
+  postgres:
+    container_name: postgres_container
+    network_mode: host
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-root}
+      POSTGRES_DB: servidor_database
+    ports:
+      - '5432:5432'
+
+  minio:
+    container_name: minio
+    network_mode: host
+    image: docker.io/bitnami/minio:latest
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    volumes:
+      - 'minio_data:/data'
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+
+  servidor-api:
+    container_name: servidor-api
+    network_mode: host
+    image: jailsonsales/pjc-seletivo-public:servidor-api-release-4
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+      - minio
+volumes:
+  minio_data:
+    driver: local

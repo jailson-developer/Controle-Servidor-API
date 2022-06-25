@@ -1,0 +1,2 @@
+INSERT INTO usuario(user_name, user_login, user_password) values('Administrador','Admin','219669e6ebcaf1855a89c684e8899ed2');
+INSERT INTO usuario(user_name, user_login, user_password) values('Usuario','User','021d83e530923cef72177f03e08d3194');
